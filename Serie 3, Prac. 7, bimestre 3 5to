@@ -1,0 +1,56 @@
+//practica numero 7, seire 3
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int pinSensor = 7;     
+int valorirent = 0; 
+int led=13;
+int content = 0; 
+int content1 = 0;   
+int total =0;
+void setup()
+{
+  Serial.begin(9600);            
+  pinMode(pinSensor, INPUT); ; 
+  lcd.begin();
+  pinMode (led,OUTPUT);
+  lcd.setCursor(0,0);            
+  lcd.print("personas: 0"); 
+  
+}
+
+void loop()
+{
+   valorirent=digitalRead(pinSensor);
+  if(valorirent!=1)
+  {
+    content++; 
+    total++;
+     while(digitalRead(pinSensor)!=1) {
+        delay(100);     
+      }
+    lcd.setCursor(10,0); 
+    lcd.print(content); 
+    lcd.setCursor(0,1);
+    lcd.println("TOTAL: ");
+    lcd.setCursor(7,1); 
+    lcd.print(total);
+   if(content==10){
+          lcd.clear();
+          lcd.setCursor(3,1); 
+          lcd.println(" LLENO   ");
+          digitalWrite(led,1);
+          delay (2000);           
+          content=0;          
+          lcd.clear();
+          digitalWrite(led,0);
+          lcd.setCursor(0,0);            
+          lcd.print("Personas: 0");
+          lcd.setCursor(0,1);
+          lcd.print("TOTAL: "); 
+          lcd.setCursor(7,1);
+          lcd.print(total);
+          
+}
+  }
+}
