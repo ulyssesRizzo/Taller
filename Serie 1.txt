@@ -1,0 +1,17 @@
+#define sensor A0
+int Pir = 0;
+int led = 13;
+void setup () {
+
+  pinMode (led, OUTPUT);
+  pinMode (sensor, INPUT);
+}
+void loop () {
+  Pir = digitalRead(sensor);
+  if (Pir == HIGH) {
+    digitalWrite(led, HIGH);
+  }
+  else {
+    digitalWrite (led, LOW);
+  }
+}
